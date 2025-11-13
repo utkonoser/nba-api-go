@@ -18,7 +18,11 @@ func (c *Client) GetGameRotation(ctx context.Context, params GameRotationParams)
 
 	reqParams := map[string]string{
 		"GameID": params.GameId,
-		"LeagueID": params.LeagueId,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.LeagueId != "" {
+		reqParams["LeagueID"] = params.LeagueId
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "gamerotation", reqParams)

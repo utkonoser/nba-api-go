@@ -15,7 +15,7 @@ type PlayerFantasyProfileParams struct {
 	PlusMinusNo string
 	RankNo string
 	Season string
-	SeasonTypePlayoffs string
+	SeasonType string
 	LeagueIdNullable string
 }
 
@@ -23,16 +23,49 @@ type PlayerFantasyProfileParams struct {
 func (c *Client) GetPlayerFantasyProfile(ctx context.Context, params PlayerFantasyProfileParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching playerfantasyprofile")
 
+	// Set defaults for required parameters
+	measureType := params.MeasureTypeBase
+	if measureType == "" {
+		measureType = "Base"
+	}
+	paceAdjust := params.PaceAdjustNo
+	if paceAdjust == "" {
+		paceAdjust = "N"
+	}
+	perMode := params.PerMode36
+	if perMode == "" {
+		perMode = "Per36"
+	}
+	plusMinus := params.PlusMinusNo
+	if plusMinus == "" {
+		plusMinus = "N"
+	}
+	rank := params.RankNo
+	if rank == "" {
+		rank = "N"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonType
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"PlayerID": params.PlayerId,
-		"MeasureType": params.MeasureTypeBase,
-		"PaceAdjust": params.PaceAdjustNo,
-		"PerMode": params.PerMode36,
-		"PlusMinus": params.PlusMinusNo,
-		"Rank": params.RankNo,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypePlayoffs,
-		"LeagueID": params.LeagueIdNullable,
+		"MeasureType": measureType,
+		"PaceAdjust": paceAdjust,
+		"PerMode": perMode,
+		"PlusMinus": plusMinus,
+		"Rank": rank,
+		"Season": season,
+		"SeasonType": seasonType,
+	}
+	
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playerfantasyprofile", reqParams)
@@ -59,3 +92,4 @@ func (c *Client) GetPlayerFantasyProfile(ctx context.Context, params PlayerFanta
 
 	return &statsResp, nil
 }
+

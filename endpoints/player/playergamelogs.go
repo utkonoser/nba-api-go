@@ -27,36 +27,71 @@ type PlayerGameLogsParams struct {
 	SeasonTypeNullable string
 	ShotClockRangeNullable string
 	TeamIdNullable string
-	VsConferenceNullable string
-	VsDivisionNullable string
 }
 
 // GetPlayerGameLogs fetches data from the playergamelogs endpoint.
 func (c *Client) GetPlayerGameLogs(ctx context.Context, params PlayerGameLogsParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching playergamelogs")
 
-	reqParams := map[string]string{
-		"DateFrom": params.DateFromNullable,
-		"DateTo": params.DateToNullable,
-		"GameSegment": params.GameSegmentNullable,
-		"LastNGames": params.LastNGamesNullable,
-		"LeagueID": params.LeagueIdNullable,
-		"Location": params.LocationNullable,
-		"MeasureType": params.MeasureTypePlayerGameLogsNullable,
-		"Month": params.MonthNullable,
-		"OpponentTeamID": params.OppTeamIdNullable,
-		"Outcome": params.OutcomeNullable,
-		"PORound": params.PoRoundNullable,
-		"PerMode": params.PerModeSimpleNullable,
-		"Period": params.PeriodNullable,
-		"PlayerID": params.PlayerIdNullable,
-		"Season": params.SeasonNullable,
-		"SeasonSegment": params.SeasonSegmentNullable,
-		"SeasonType": params.SeasonTypeNullable,
-		"ShotClockRange": params.ShotClockRangeNullable,
-		"TeamID": params.TeamIdNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
+	reqParams := map[string]string{}
+	
+	// Add nullable parameters only if they are not empty
+	if params.DateFromNullable != "" {
+		reqParams["DateFrom"] = params.DateFromNullable
+	}
+	if params.DateToNullable != "" {
+		reqParams["DateTo"] = params.DateToNullable
+	}
+	if params.GameSegmentNullable != "" {
+		reqParams["GameSegment"] = params.GameSegmentNullable
+	}
+	if params.LastNGamesNullable != "" {
+		reqParams["LastNGames"] = params.LastNGamesNullable
+	}
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
+	}
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.MeasureTypePlayerGameLogsNullable != "" {
+		reqParams["MeasureType"] = params.MeasureTypePlayerGameLogsNullable
+	}
+	if params.MonthNullable != "" {
+		reqParams["Month"] = params.MonthNullable
+	}
+	if params.OppTeamIdNullable != "" {
+		reqParams["OppTeamID"] = params.OppTeamIdNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.PoRoundNullable != "" {
+		reqParams["PORound"] = params.PoRoundNullable
+	}
+	if params.PerModeSimpleNullable != "" {
+		reqParams["PerMode"] = params.PerModeSimpleNullable
+	}
+	if params.PeriodNullable != "" {
+		reqParams["Period"] = params.PeriodNullable
+	}
+	if params.PlayerIdNullable != "" {
+		reqParams["PlayerID"] = params.PlayerIdNullable
+	}
+	if params.SeasonNullable != "" {
+		reqParams["Season"] = params.SeasonNullable
+	}
+	if params.SeasonSegmentNullable != "" {
+		reqParams["SeasonSegment"] = params.SeasonSegmentNullable
+	}
+	if params.SeasonTypeNullable != "" {
+		reqParams["SeasonType"] = params.SeasonTypeNullable
+	}
+	if params.ShotClockRangeNullable != "" {
+		reqParams["ShotClockRange"] = params.ShotClockRangeNullable
+	}
+	if params.TeamIdNullable != "" {
+		reqParams["TeamID"] = params.TeamIdNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playergamelogs", reqParams)
@@ -83,3 +118,4 @@ func (c *Client) GetPlayerGameLogs(ctx context.Context, params PlayerGameLogsPar
 
 	return &statsResp, nil
 }
+

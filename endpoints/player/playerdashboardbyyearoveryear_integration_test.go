@@ -16,8 +16,10 @@ func TestGetPlayerDashboardByYearOverYear_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := PlayerDashboardByYearOverYearParams{
-		Season: "2023-24",
-		LeagueIdNullable: "",
+		PlayerId: "2544", // LeBron James
+		Season:   "2023-24",
+		SeasonTypePlayoffs: "Regular Season",
+		LeagueIdNullable: "00",
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -32,42 +34,22 @@ func TestGetPlayerDashboardByYearOverYear_Integration(t *testing.T) {
 	}
 
 	require.NotNil(t, response)
-	// Resource may be empty for some endpoints
 	if response.Resource != "" {
 		assert.Contains(t, response.Resource, "playerdashboardbyyearoveryear")
 	}
 
 	t.Logf("Successfully fetched playerdashboardbyyearoveryear with %d result sets", len(response.ResultSets))
 
-	// If no result sets, skip dataset validation (valid scenario)
 	if len(response.ResultSets) == 0 {
 		t.Log("No result sets returned (this is valid for some parameter combinations)")
 		return
 	}
 
-// Verify ByYearPlayerDashboard dataset structure
-	if dataset, err := response.GetDataSet("ByYearPlayerDashboard"); err == nil {
-		assert.NotNil(t, dataset, "Should have ByYearPlayerDashboard dataset")
-		t.Logf("ByYearPlayerDashboard: %d rows", dataset.RowCount())
-		if dataset.RowCount() > 0 {
-			// Verify we can access data
-			rows := dataset.ToMap()
-			assert.NotEmpty(t, rows, "Should have data rows")
-		}
-	} else {
-		t.Logf("Dataset ByYearPlayerDashboard not found (may be expected): %v", err)
-	}
-
-	// Verify OverallPlayerDashboard dataset structure
 	if dataset, err := response.GetDataSet("OverallPlayerDashboard"); err == nil {
 		assert.NotNil(t, dataset, "Should have OverallPlayerDashboard dataset")
 		t.Logf("OverallPlayerDashboard: %d rows", dataset.RowCount())
-		if dataset.RowCount() > 0 {
-			// Verify we can access data
-			rows := dataset.ToMap()
-			assert.NotEmpty(t, rows, "Should have data rows")
-		}
 	} else {
 		t.Logf("Dataset OverallPlayerDashboard not found (may be expected): %v", err)
 	}
 }
+

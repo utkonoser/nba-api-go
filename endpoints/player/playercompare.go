@@ -20,18 +20,16 @@ type PlayerCompareParams struct {
 	PlusMinus string
 	Rank string
 	Season string
-	SeasonTypePlayoffs string
+	SeasonType string
 	ConferenceNullable string
-	DateFromNullable string
-	DateToNullable string
 	DivisionSimpleNullable string
 	GameSegmentNullable string
 	LeagueIdNullable string
 	LocationNullable string
 	OutcomeNullable string
+	PoRoundNullable string
 	SeasonSegmentNullable string
 	ShotClockRangeNullable string
-	VsConferenceNullable string
 	VsDivisionNullable string
 }
 
@@ -39,32 +37,97 @@ type PlayerCompareParams struct {
 func (c *Client) GetPlayerCompare(ctx context.Context, params PlayerCompareParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching playercompare")
 
+	// Set defaults for required parameters
+	lastNGames := params.LastNGames
+	if lastNGames == "" {
+		lastNGames = "0"
+	}
+	measureType := params.MeasureTypeDetailedDefense
+	if measureType == "" {
+		measureType = "Base"
+	}
+	month := params.Month
+	if month == "" {
+		month = "0"
+	}
+	opponentTeamId := params.OpponentTeamId
+	if opponentTeamId == "" {
+		opponentTeamId = "0"
+	}
+	paceAdjust := params.PaceAdjust
+	if paceAdjust == "" {
+		paceAdjust = "N"
+	}
+	perMode := params.PerModeDetailed
+	if perMode == "" {
+		perMode = "Totals"
+	}
+	period := params.Period
+	if period == "" {
+		period = "0"
+	}
+	plusMinus := params.PlusMinus
+	if plusMinus == "" {
+		plusMinus = "N"
+	}
+	rank := params.Rank
+	if rank == "" {
+		rank = "N"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonType
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"VsPlayerIDList": params.VsPlayerIdList,
 		"PlayerIDList": params.PlayerIdList,
-		"LastNGames": params.LastNGames,
-		"MeasureType": params.MeasureTypeDetailedDefense,
-		"Month": params.Month,
-		"OpponentTeamID": params.OpponentTeamId,
-		"PaceAdjust": params.PaceAdjust,
-		"PerMode": params.PerModeDetailed,
-		"Period": params.Period,
-		"PlusMinus": params.PlusMinus,
-		"Rank": params.Rank,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypePlayoffs,
-		"Conference": params.ConferenceNullable,
-		"DateFrom": params.DateFromNullable,
-		"DateTo": params.DateToNullable,
-		"Division": params.DivisionSimpleNullable,
-		"GameSegment": params.GameSegmentNullable,
-		"LeagueID": params.LeagueIdNullable,
-		"Location": params.LocationNullable,
-		"Outcome": params.OutcomeNullable,
-		"SeasonSegment": params.SeasonSegmentNullable,
-		"ShotClockRange": params.ShotClockRangeNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
+		"LastNGames": lastNGames,
+		"MeasureType": measureType,
+		"Month": month,
+		"OpponentTeamID": opponentTeamId,
+		"PaceAdjust": paceAdjust,
+		"PerMode": perMode,
+		"Period": period,
+		"PlusMinus": plusMinus,
+		"Rank": rank,
+		"Season": season,
+		"SeasonType": seasonType,
+	}
+	
+	if params.ConferenceNullable != "" {
+		reqParams["Conference"] = params.ConferenceNullable
+	}
+	if params.DivisionSimpleNullable != "" {
+		reqParams["Division"] = params.DivisionSimpleNullable
+	}
+	if params.GameSegmentNullable != "" {
+		reqParams["GameSegment"] = params.GameSegmentNullable
+	}
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
+	}
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.PoRoundNullable != "" {
+		reqParams["PORound"] = params.PoRoundNullable
+	}
+	if params.SeasonSegmentNullable != "" {
+		reqParams["SeasonSegment"] = params.SeasonSegmentNullable
+	}
+	if params.ShotClockRangeNullable != "" {
+		reqParams["ShotClockRange"] = params.ShotClockRangeNullable
+	}
+	if params.VsDivisionNullable != "" {
+		reqParams["VsDivision"] = params.VsDivisionNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playercompare", reqParams)
@@ -91,3 +154,4 @@ func (c *Client) GetPlayerCompare(ctx context.Context, params PlayerCompareParam
 
 	return &statsResp, nil
 }
+

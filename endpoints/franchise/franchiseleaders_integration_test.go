@@ -16,7 +16,8 @@ func TestGetFranchiseLeaders_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := FranchiseLeadersParams{
-		LeagueIdNullable: "",
+		TeamId:          "1610612737", // Atlanta Hawks
+		LeagueIdNullable: "00",
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

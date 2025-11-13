@@ -24,17 +24,45 @@ type CumeStatsTeamGamesParams struct {
 func (c *Client) GetCumeStatsTeamGames(ctx context.Context, params CumeStatsTeamGamesParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching cumestatsteamgames")
 
+	// Set defaults for required parameters
+	leagueId := params.LeagueId
+	if leagueId == "" {
+		leagueId = "00"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonTypeAllStar
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LeagueID": params.LeagueId,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypeAllStar,
-		"Location": params.LocationNullable,
-		"Outcome": params.OutcomeNullable,
-		"SeasonID": params.SeasonIdNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
-		"VsTeamID": params.VsTeamIdNullable,
+		"LeagueID": leagueId,
+		"Season": season,
+		"SeasonType": seasonType,
+	}
+	
+	// Add nullable parameters only if they are not empty
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.SeasonIdNullable != "" {
+		reqParams["SeasonID"] = params.SeasonIdNullable
+	}
+	if params.VsConferenceNullable != "" {
+		reqParams["VsConference"] = params.VsConferenceNullable
+	}
+	if params.VsDivisionNullable != "" {
+		reqParams["VsDivision"] = params.VsDivisionNullable
+	}
+	if params.VsTeamIdNullable != "" {
+		reqParams["VsTeamID"] = params.VsTeamIdNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "cumestatsteamgames", reqParams)

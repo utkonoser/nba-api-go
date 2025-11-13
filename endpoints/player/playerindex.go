@@ -9,7 +9,7 @@ import (
 // PlayerIndexParams holds parameters for the PlayerIndex endpoint.
 type PlayerIndexParams struct {
 	ActiveNullable string
-	AllstarNullable string
+	AllStarNullable string
 	CollegeNullable string
 	CountryNullable string
 	DraftPickNullable string
@@ -27,20 +27,54 @@ type PlayerIndexParams struct {
 func (c *Client) GetPlayerIndex(ctx context.Context, params PlayerIndexParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching playerindex")
 
+	// Set defaults for required parameters
+	leagueId := params.LeagueId
+	if leagueId == "" {
+		leagueId = "00"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+
 	reqParams := map[string]string{
-		"Active": params.ActiveNullable,
-		"AllStar": params.AllstarNullable,
-		"College": params.CollegeNullable,
-		"Country": params.CountryNullable,
-		"DraftPick": params.DraftPickNullable,
-		"DraftYear": params.DraftYearNullable,
-		"Height": params.HeightNullable,
-		"PlayerPosition": params.PlayerPositionAbbreviationNullable,
-		"Historical": params.HistoricalNullable,
-		"LeagueID": params.LeagueId,
-		"Season": params.Season,
-		"TeamID": params.TeamIdNullable,
-		"Weight": params.WeightNullable,
+		"LeagueID": leagueId,
+		"Season": season,
+	}
+	
+	// Add nullable parameters only if they are not empty
+	if params.ActiveNullable != "" {
+		reqParams["Active"] = params.ActiveNullable
+	}
+	if params.AllStarNullable != "" {
+		reqParams["AllStar"] = params.AllStarNullable
+	}
+	if params.CollegeNullable != "" {
+		reqParams["College"] = params.CollegeNullable
+	}
+	if params.CountryNullable != "" {
+		reqParams["Country"] = params.CountryNullable
+	}
+	if params.DraftPickNullable != "" {
+		reqParams["DraftPick"] = params.DraftPickNullable
+	}
+	if params.DraftYearNullable != "" {
+		reqParams["DraftYear"] = params.DraftYearNullable
+	}
+	if params.HeightNullable != "" {
+		reqParams["Height"] = params.HeightNullable
+	}
+	if params.PlayerPositionAbbreviationNullable != "" {
+		reqParams["PlayerPosition"] = params.PlayerPositionAbbreviationNullable
+	}
+	if params.HistoricalNullable != "" {
+		reqParams["Historical"] = params.HistoricalNullable
+	}
+	if params.TeamIdNullable != "" {
+		reqParams["TeamID"] = params.TeamIdNullable
+	}
+	if params.WeightNullable != "" {
+		reqParams["Weight"] = params.WeightNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playerindex", reqParams)
@@ -67,3 +101,4 @@ func (c *Client) GetPlayerIndex(ctx context.Context, params PlayerIndexParams) (
 
 	return &statsResp, nil
 }
+

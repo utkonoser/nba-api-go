@@ -16,6 +16,7 @@ func TestGetGameRotation_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := GameRotationParams{
+		GameId:   "0022300001",
 		LeagueId: "00",
 	}
 

@@ -16,6 +16,7 @@ func TestGetPlayerAwards_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := PlayerAwardsParams{
+		PlayerId: "2544", // LeBron James
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -43,7 +44,7 @@ func TestGetPlayerAwards_Integration(t *testing.T) {
 		return
 	}
 
-// Verify PlayerAwards dataset structure
+	// Verify PlayerAwards dataset structure
 	if dataset, err := response.GetDataSet("PlayerAwards"); err == nil {
 		assert.NotNil(t, dataset, "Should have PlayerAwards dataset")
 		t.Logf("PlayerAwards: %d rows", dataset.RowCount())
@@ -56,3 +57,4 @@ func TestGetPlayerAwards_Integration(t *testing.T) {
 		t.Logf("Dataset PlayerAwards not found (may be expected): %v", err)
 	}
 }
+

@@ -37,30 +37,100 @@ type TeamDashboardByGeneralSplitsParams struct {
 func (c *Client) GetTeamDashboardByGeneralSplits(ctx context.Context, params TeamDashboardByGeneralSplitsParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching teamdashboardbygeneralsplits")
 
+	// Set defaults for required parameters
+	lastNGames := params.LastNGames
+	if lastNGames == "" {
+		lastNGames = "0"
+	}
+	measureType := params.MeasureTypeDetailedDefense
+	if measureType == "" {
+		measureType = "Base"
+	}
+	month := params.Month
+	if month == "" {
+		month = "0"
+	}
+	opponentTeamId := params.OpponentTeamId
+	if opponentTeamId == "" {
+		opponentTeamId = "0"
+	}
+	paceAdjust := params.PaceAdjust
+	if paceAdjust == "" {
+		paceAdjust = "N"
+	}
+	perMode := params.PerModeDetailed
+	if perMode == "" {
+		perMode = "Totals"
+	}
+	period := params.Period
+	if period == "" {
+		period = "0"
+	}
+	plusMinus := params.PlusMinus
+	if plusMinus == "" {
+		plusMinus = "N"
+	}
+	rank := params.Rank
+	if rank == "" {
+		rank = "N"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonTypeAllStar
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LastNGames": params.LastNGames,
-		"MeasureType": params.MeasureTypeDetailedDefense,
-		"Month": params.Month,
-		"OpponentTeamID": params.OpponentTeamId,
-		"PaceAdjust": params.PaceAdjust,
-		"PerMode": params.PerModeDetailed,
-		"Period": params.Period,
-		"PlusMinus": params.PlusMinus,
-		"Rank": params.Rank,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypeAllStar,
-		"DateFrom": params.DateFromNullable,
-		"DateTo": params.DateToNullable,
-		"GameSegment": params.GameSegmentNullable,
-		"LeagueID": params.LeagueIdNullable,
-		"Location": params.LocationNullable,
-		"Outcome": params.OutcomeNullable,
-		"PORound": params.PoRoundNullable,
-		"SeasonSegment": params.SeasonSegmentNullable,
-		"ShotClockRange": params.ShotClockRangeNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
+		"LastNGames": lastNGames,
+		"MeasureType": measureType,
+		"Month": month,
+		"OpponentTeamID": opponentTeamId,
+		"PaceAdjust": paceAdjust,
+		"PerMode": perMode,
+		"Period": period,
+		"PlusMinus": plusMinus,
+		"Rank": rank,
+		"Season": season,
+		"SeasonType": seasonType,
+	}
+	
+	// Add nullable parameters only if they are not empty
+	if params.DateFromNullable != "" {
+		reqParams["DateFrom"] = params.DateFromNullable
+	}
+	if params.DateToNullable != "" {
+		reqParams["DateTo"] = params.DateToNullable
+	}
+	if params.GameSegmentNullable != "" {
+		reqParams["GameSegment"] = params.GameSegmentNullable
+	}
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
+	}
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.PoRoundNullable != "" {
+		reqParams["PORound"] = params.PoRoundNullable
+	}
+	if params.SeasonSegmentNullable != "" {
+		reqParams["SeasonSegment"] = params.SeasonSegmentNullable
+	}
+	if params.ShotClockRangeNullable != "" {
+		reqParams["ShotClockRange"] = params.ShotClockRangeNullable
+	}
+	if params.VsConferenceNullable != "" {
+		reqParams["VsConference"] = params.VsConferenceNullable
+	}
+	if params.VsDivisionNullable != "" {
+		reqParams["VsDivision"] = params.VsDivisionNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "teamdashboardbygeneralsplits", reqParams)

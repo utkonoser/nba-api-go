@@ -20,7 +20,10 @@ func (c *Client) GetCommonPlayoffSeries(ctx context.Context, params CommonPlayof
 	reqParams := map[string]string{
 		"LeagueID": params.LeagueId,
 		"Season": params.Season,
-		"SeriesID": params.SeriesIdNullable,
+	}
+	
+	if params.SeriesIdNullable != "" {
+		reqParams["SeriesID"] = params.SeriesIdNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "commonplayoffseries", reqParams)

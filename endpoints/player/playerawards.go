@@ -43,3 +43,4 @@ func (c *Client) GetPlayerAwards(ctx context.Context, params PlayerAwardsParams)
 
 	return &statsResp, nil
 }
+

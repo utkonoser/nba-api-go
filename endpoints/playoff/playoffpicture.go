@@ -18,7 +18,10 @@ func (c *Client) GetPlayoffPicture(ctx context.Context, params PlayoffPicturePar
 
 	reqParams := map[string]string{
 		"LeagueID": params.LeagueId,
-		"SeasonID": params.SeasonId,
+	}
+	
+	if params.SeasonId != "" {
+		reqParams["SeasonID"] = params.SeasonId
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playoffpicture", reqParams)

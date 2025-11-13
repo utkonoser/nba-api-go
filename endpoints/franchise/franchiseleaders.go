@@ -18,7 +18,11 @@ func (c *Client) GetFranchiseLeaders(ctx context.Context, params FranchiseLeader
 
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LeagueID": params.LeagueIdNullable,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "franchiseleaders", reqParams)

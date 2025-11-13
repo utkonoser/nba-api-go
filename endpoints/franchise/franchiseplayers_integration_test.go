@@ -16,7 +16,8 @@ func TestGetFranchisePlayers_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := FranchisePlayersParams{
-		LeagueId: "00",
+		TeamId:           "1610612737", // Atlanta Hawks
+		LeagueId:         "00",
 		SeasonTypeAllStar: "Regular Season",
 	}
 

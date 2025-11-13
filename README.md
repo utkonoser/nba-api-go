@@ -76,10 +76,7 @@ See [`examples/find_players`](examples/find_players) for more search examples.
 
 The `live` package provides access to real-time NBA data:
 
-- **`GetScoreboard(ctx)`** - Today's game scores
-- **`GetBoxScore(ctx, gameID)`** - Detailed box score for a game
-- **`GetPlayByPlay(ctx, gameID)`** - Play-by-play data for a game
-- **`GetOdds(ctx, gameID)`** - Betting odds for a game
+- **`GetScoreboard(ctx)`** - Live scoreboard
 
 ### Stats Package
 
@@ -117,8 +114,8 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 **Player Endpoints:**
 - CommonAllPlayers, CommonPlayerInfo, CommonPlayoffSeries
 - CumeStatsPlayer, CumeStatsPlayerGames
-- PlayerAwards, PlayerCareerByCollege, PlayerCareerByCollegeRollup
-- PlayerCareerStats, PlayerCompare
+- PlayerAwards, PlayerCareerByCollegeRollup, PlayerCareerStats
+- PlayerCompare
 - PlayerDashboardByClutch, PlayerDashboardByGameSplits
 - PlayerDashboardByGeneralSplits, PlayerDashboardByLastNGames
 - PlayerDashboardByShootingSplits, PlayerDashboardByTeamPerformance
@@ -131,7 +128,6 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 **Team Endpoints:**
 - CommonTeamRoster, CommonTeamYears
 - CumeStatsTeam, CumeStatsTeamGames
-- TeamAndPlayersVsPlayers
 - TeamDashboardByGeneralSplits, TeamDashboardByShootingSplits
 - TeamDashLineups, TeamDashPtPass, TeamDashPtReb, TeamDashPtShots
 - TeamDetails, TeamEstimatedMetrics, TeamGameStreakFinder
@@ -140,16 +136,14 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - TeamVsPlayer, TeamYearByYearStats
 
 **League Endpoints:**
-- LeagueDashLineups, LeagueDashOppPtShot
-- LeagueDashPlayerBioStats, LeagueDashPlayerClutch
-- LeagueDashPlayerPtShot, LeagueDashPlayerShotLocations, LeagueDashPlayerStats
-- LeagueDashPtDefend, LeagueDashPtStats, LeagueDashPtTeamDefend
-- LeagueDashTeamClutch, LeagueDashTeamPtShot
-- LeagueDashTeamShotLocations, LeagueDashTeamStats
+- LeagueDashOppPtShot
+- LeagueDashPlayerBioStats
+- LeagueDashPlayerPtShot, LeagueDashPlayerStats
+- LeagueDashPtTeamDefend
+- LeagueDashTeamPtShot
 - LeagueGameFinder, LeagueGameLog
-- LeagueHustleStatsPlayer, LeagueHustleStatsTeam
-- LeagueLeaders, LeagueLineupViz, LeaguePlayerOnDetails
-- LeagueSeasonMatchups, LeagueStandings, LeagueStandingsV3
+- LeagueLeaders
+- LeagueStandings, LeagueStandingsV3
 
 **Draft Endpoints:**
 - DraftCombineDrillResults, DraftCombineNonStationaryShooting
@@ -160,7 +154,6 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - GameRotation, HustleStatsBoxScore
 - PlayByPlay, PlayByPlayV2, PlayByPlayV3
 - ScoreboardV2, ScoreboardV3
-- WinProbabilityPBP
 
 **Shot Chart Endpoints:**
 - ShotChartDetail, ShotChartLeagueWide, ShotChartLineupDetail
@@ -169,13 +162,12 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - FranchiseHistory, FranchiseLeaders, FranchisePlayers
 
 **Other Endpoints:**
-- DefenseHub, DunkScoreLeaders, FantasyWidget
-- GLAlumBoxScoreSimilarityScore, HomePage, HomePageLeaders, HomePageV2
-- InfographicFanDuelPlayer, ISTStandings, LeadersTiles
+- FantasyWidget
+- HomePage, HomePageV2
+- InfographicFanDuelPlayer, ISTStandings
 - MatchupsRollup, PlayoffPicture
 - ScheduleLeagueV2, ScheduleLeagueV2Int
 - SynergyPlayTypes
-- VideoDetails, VideoDetailsAsset, VideoEvents, VideoEventsAsset, VideoStatus
 
 
 ### Unit Tests ✅

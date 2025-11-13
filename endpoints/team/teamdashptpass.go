@@ -29,22 +29,68 @@ type TeamDashPtPassParams struct {
 func (c *Client) GetTeamDashPtPass(ctx context.Context, params TeamDashPtPassParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching teamdashptpass")
 
+	// Set defaults for required parameters
+	lastNGames := params.LastNGames
+	if lastNGames == "" {
+		lastNGames = "0"
+	}
+	leagueId := params.LeagueId
+	if leagueId == "" {
+		leagueId = "00"
+	}
+	month := params.Month
+	if month == "" {
+		month = "0"
+	}
+	opponentTeamId := params.OpponentTeamId
+	if opponentTeamId == "" {
+		opponentTeamId = "0"
+	}
+	perMode := params.PerModeSimple
+	if perMode == "" {
+		perMode = "Totals"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonTypeAllStar
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LastNGames": params.LastNGames,
-		"LeagueID": params.LeagueId,
-		"Month": params.Month,
-		"OpponentTeamID": params.OpponentTeamId,
-		"PerMode": params.PerModeSimple,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypeAllStar,
-		"DateFrom": params.DateFromNullable,
-		"DateTo": params.DateToNullable,
-		"Location": params.LocationNullable,
-		"Outcome": params.OutcomeNullable,
-		"SeasonSegment": params.SeasonSegmentNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
+		"LastNGames": lastNGames,
+		"LeagueID": leagueId,
+		"Month": month,
+		"OpponentTeamID": opponentTeamId,
+		"PerMode": perMode,
+		"Season": season,
+		"SeasonType": seasonType,
+	}
+	
+	// Add nullable parameters only if they are not empty
+	if params.DateFromNullable != "" {
+		reqParams["DateFrom"] = params.DateFromNullable
+	}
+	if params.DateToNullable != "" {
+		reqParams["DateTo"] = params.DateToNullable
+	}
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.SeasonSegmentNullable != "" {
+		reqParams["SeasonSegment"] = params.SeasonSegmentNullable
+	}
+	if params.VsConferenceNullable != "" {
+		reqParams["VsConference"] = params.VsConferenceNullable
+	}
+	if params.VsDivisionNullable != "" {
+		reqParams["VsDivision"] = params.VsDivisionNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "teamdashptpass", reqParams)

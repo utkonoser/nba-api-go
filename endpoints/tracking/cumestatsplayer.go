@@ -19,12 +19,26 @@ type CumeStatsPlayerParams struct {
 func (c *Client) GetCumeStatsPlayer(ctx context.Context, params CumeStatsPlayerParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching cumestatsplayer")
 
+	// Set defaults for required parameters
+	leagueId := params.LeagueId
+	if leagueId == "" {
+		leagueId = "00"
+	}
+	season := params.Season
+	if season == "" {
+		season = "2023-24"
+	}
+	seasonType := params.SeasonTypeAllStar
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"PlayerID": params.PlayerId,
 		"GameIDs": params.GameIds,
-		"LeagueID": params.LeagueId,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypeAllStar,
+		"LeagueID": leagueId,
+		"Season": season,
+		"SeasonType": seasonType,
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "cumestatsplayer", reqParams)

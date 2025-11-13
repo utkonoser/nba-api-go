@@ -20,9 +20,17 @@ func (c *Client) GetFranchisePlayers(ctx context.Context, params FranchisePlayer
 
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LeagueID": params.LeagueId,
-		"PerMode": params.PerModeDetailed,
-		"SeasonType": params.SeasonTypeAllStar,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.LeagueId != "" {
+		reqParams["LeagueID"] = params.LeagueId
+	}
+	if params.PerModeDetailed != "" {
+		reqParams["PerMode"] = params.PerModeDetailed
+	}
+	if params.SeasonTypeAllStar != "" {
+		reqParams["SeasonType"] = params.SeasonTypeAllStar
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "franchiseplayers", reqParams)

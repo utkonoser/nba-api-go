@@ -39,28 +39,74 @@ func (c *Client) GetPlayerDashboardByGeneralSplits(ctx context.Context, params P
 
 	reqParams := map[string]string{
 		"PlayerID": params.PlayerId,
-		"LastNGames": params.LastNGames,
-		"MeasureType": params.MeasureTypeDetailed,
-		"Month": params.Month,
-		"OpponentTeamID": params.OpponentTeamId,
-		"PaceAdjust": params.PaceAdjust,
-		"PerMode": params.PerModeDetailed,
-		"Period": params.Period,
-		"PlusMinus": params.PlusMinus,
-		"Rank": params.Rank,
-		"Season": params.Season,
-		"SeasonType": params.SeasonTypePlayoffs,
-		"DateFrom": params.DateFromNullable,
-		"DateTo": params.DateToNullable,
-		"GameSegment": params.GameSegmentNullable,
-		"LeagueID": params.LeagueIdNullable,
-		"Location": params.LocationNullable,
-		"Outcome": params.OutcomeNullable,
-		"PORound": params.PoRoundNullable,
-		"SeasonSegment": params.SeasonSegmentNullable,
-		"ShotClockRange": params.ShotClockRangeNullable,
-		"VsConference": params.VsConferenceNullable,
-		"VsDivision": params.VsDivisionNullable,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.LastNGames != "" {
+		reqParams["LastNGames"] = params.LastNGames
+	}
+	if params.MeasureTypeDetailed != "" {
+		reqParams["MeasureType"] = params.MeasureTypeDetailed
+	}
+	if params.Month != "" {
+		reqParams["Month"] = params.Month
+	}
+	if params.OpponentTeamId != "" {
+		reqParams["OpponentTeamID"] = params.OpponentTeamId
+	}
+	if params.PaceAdjust != "" {
+		reqParams["PaceAdjust"] = params.PaceAdjust
+	}
+	if params.PerModeDetailed != "" {
+		reqParams["PerMode"] = params.PerModeDetailed
+	}
+	if params.Period != "" {
+		reqParams["Period"] = params.Period
+	}
+	if params.PlusMinus != "" {
+		reqParams["PlusMinus"] = params.PlusMinus
+	}
+	if params.Rank != "" {
+		reqParams["Rank"] = params.Rank
+	}
+	if params.Season != "" {
+		reqParams["Season"] = params.Season
+	}
+	if params.SeasonTypePlayoffs != "" {
+		reqParams["SeasonType"] = params.SeasonTypePlayoffs
+	}
+	if params.DateFromNullable != "" {
+		reqParams["DateFrom"] = params.DateFromNullable
+	}
+	if params.DateToNullable != "" {
+		reqParams["DateTo"] = params.DateToNullable
+	}
+	if params.GameSegmentNullable != "" {
+		reqParams["GameSegment"] = params.GameSegmentNullable
+	}
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
+	}
+	if params.LocationNullable != "" {
+		reqParams["Location"] = params.LocationNullable
+	}
+	if params.OutcomeNullable != "" {
+		reqParams["Outcome"] = params.OutcomeNullable
+	}
+	if params.PoRoundNullable != "" {
+		reqParams["PORound"] = params.PoRoundNullable
+	}
+	if params.SeasonSegmentNullable != "" {
+		reqParams["SeasonSegment"] = params.SeasonSegmentNullable
+	}
+	if params.ShotClockRangeNullable != "" {
+		reqParams["ShotClockRange"] = params.ShotClockRangeNullable
+	}
+	if params.VsConferenceNullable != "" {
+		reqParams["VsConference"] = params.VsConferenceNullable
+	}
+	if params.VsDivisionNullable != "" {
+		reqParams["VsDivision"] = params.VsDivisionNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playerdashboardbygeneralsplits", reqParams)

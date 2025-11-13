@@ -20,9 +20,17 @@ func (c *Client) GetPlayerFantasyProfileBarGraph(ctx context.Context, params Pla
 
 	reqParams := map[string]string{
 		"PlayerID": params.PlayerId,
-		"Season": params.Season,
-		"LeagueID": params.LeagueIdNullable,
-		"SeasonType": params.SeasonTypeAllStarNullable,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.Season != "" {
+		reqParams["Season"] = params.Season
+	}
+	if params.LeagueIdNullable != "" {
+		reqParams["LeagueID"] = params.LeagueIdNullable
+	}
+	if params.SeasonTypeAllStarNullable != "" {
+		reqParams["SeasonType"] = params.SeasonTypeAllStarNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "playerfantasyprofilebargraph", reqParams)
@@ -49,3 +57,4 @@ func (c *Client) GetPlayerFantasyProfileBarGraph(ctx context.Context, params Pla
 
 	return &statsResp, nil
 }
+

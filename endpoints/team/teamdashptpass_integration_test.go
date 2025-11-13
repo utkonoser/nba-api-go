@@ -16,6 +16,7 @@ func TestGetTeamDashPtPass_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := TeamDashPtPassParams{
+		TeamId: "1610612737", // Atlanta Hawks
 		LeagueId: "00",
 		Season: "2023-24",
 		SeasonTypeAllStar: "Regular Season",

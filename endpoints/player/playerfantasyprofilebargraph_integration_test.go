@@ -16,8 +16,9 @@ func TestGetPlayerFantasyProfileBarGraph_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := PlayerFantasyProfileBarGraphParams{
-		Season: "2023-24",
-		LeagueIdNullable: "",
+		PlayerId: "2544", // LeBron James
+		Season:   "2023-24",
+		LeagueIdNullable: "00",
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -45,7 +46,7 @@ func TestGetPlayerFantasyProfileBarGraph_Integration(t *testing.T) {
 		return
 	}
 
-// Verify LastFiveGamesAvg dataset structure
+	// Verify LastFiveGamesAvg dataset structure
 	if dataset, err := response.GetDataSet("LastFiveGamesAvg"); err == nil {
 		assert.NotNil(t, dataset, "Should have LastFiveGamesAvg dataset")
 		t.Logf("LastFiveGamesAvg: %d rows", dataset.RowCount())
@@ -71,3 +72,4 @@ func TestGetPlayerFantasyProfileBarGraph_Integration(t *testing.T) {
 		t.Logf("Dataset SeasonAvg not found (may be expected): %v", err)
 	}
 }
+

@@ -16,6 +16,7 @@ func TestGetCumeStatsPlayerGames_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := CumeStatsPlayerGamesParams{
+		PlayerId: "2544", // LeBron James
 		LeagueId: "00",
 		Season: "2023-24",
 		SeasonTypeAllStar: "Regular Season",

@@ -18,10 +18,10 @@ func TestGetPlayerAwards(t *testing.T) {
 		"resource": "playerawards",
 		"parameters": {},
 		"resultSets": [
-{
+			{
 				"name": "PlayerAwards",
 				"headers": ["PERSON_ID", "FIRST_NAME", "LAST_NAME", "TEAM", "DESCRIPTION"],
-				"rowSet": [[1, "Test", "Data", 100, 50]]
+				"rowSet": [[2544, "LeBron", "James", "LAL", "NBA Championship"]]
 			}
 		]
 	}`
@@ -40,13 +40,15 @@ func TestGetPlayerAwards(t *testing.T) {
 		logger:     logger,
 	}
 
-	params := PlayerAwardsParams{}
+	params := PlayerAwardsParams{
+		PlayerId: "2544",
+	}
 
 	response, err := c.GetPlayerAwards(context.Background(), params)
 
 	require.NoError(t, err)
 	require.NotNil(t, response)
 	assert.Equal(t, "playerawards", response.Resource)
-	// Note: ResultSets may be empty for some endpoints
 	assert.NotNil(t, response.ResultSets)
 }
+
