@@ -21,12 +21,14 @@ jobs:
           go-version: '1.25.1'
 
       - name: Install golangci-lint
-        uses: golangci/golangci-lint-action@v4
-        with:
-          version: latest
+        run: |
+          # Install latest version that supports Go 1.25.1
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+          golangci-lint --version
 
       - name: Run linter
-        run: make lint
+        run: golangci-lint run --out-format=colored-line-number
 
   unit-tests:
     name: Unit Tests

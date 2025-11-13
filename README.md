@@ -4,7 +4,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Linter](https://github.com/utkonoser/nba-api-go/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/utkonoser/nba-api-go/actions)
 [![Unit Tests](https://github.com/utkonoser/nba-api-go/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/utkonoser/nba-api-go/actions)
-[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)](https://github.com/utkonoser/nba-api-go/actions)
 [![Coverage](https://img.shields.io/badge/coverage-ready-blue)](https://github.com/utkonoser/nba-api-go/actions)
 
 A comprehensive Go client library for accessing NBA.com APIs. This library provides easy access to NBA statistics, live game data, player information, and team data.
