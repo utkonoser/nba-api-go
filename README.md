@@ -2,6 +2,10 @@
 
 [![Go Version](https://img.shields.io/badge/Go-1.25.1-blue.svg)](https://golang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Linter](https://github.com/utkonoser/nba-api-go/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/utkonoser/nba-api-go/actions)
+[![Unit Tests](https://github.com/utkonoser/nba-api-go/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/utkonoser/nba-api-go/actions)
+[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)](https://github.com/utkonoser/nba-api-go/actions)
+[![Coverage](https://img.shields.io/badge/coverage-ready-blue)](https://github.com/utkonoser/nba-api-go/actions)
 
 A comprehensive Go client library for accessing NBA.com APIs. This library provides easy access to NBA statistics, live game data, player information, and team data.
 
@@ -197,6 +201,21 @@ go test -v -tags=integration ./endpoints/player -timeout 60s
 # Run specific endpoint
 go test -v -tags=integration -run TestGetPlayerCareerStats ./endpoints/player
 ```
+
+**Note**: Integration tests can also be run manually via GitHub Actions workflow. They are not run automatically on every push to avoid unnecessary API calls and rate limiting.
+
+### CI/CD Pipeline 🚀
+This project uses GitHub Actions for continuous integration:
+
+- **Linter**: Automatically runs `golangci-lint` on every push and pull request
+- **Unit Tests**: Automatically runs all unit tests with coverage on every push and pull request
+- **Integration Tests**: Can be manually triggered via GitHub Actions workflow (Actions → CI → Run workflow)
+
+To run integration tests manually:
+1. Go to the [Actions](https://github.com/utkonoser/nba-api-go/actions) tab
+2. Select the "CI" workflow
+3. Click "Run workflow"
+4. Choose the branch and click "Run workflow"
 
 **Test Statistics**:
 - ✅ **91/91 unit tests** passing (100%)
