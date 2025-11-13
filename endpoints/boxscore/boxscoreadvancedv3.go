@@ -22,11 +22,23 @@ func (c *Client) GetBoxScoreAdvancedV3(ctx context.Context, params BoxScoreAdvan
 
 	reqParams := map[string]string{
 		"GameID": params.GameId,
-		"EndPeriod": params.EndPeriod,
-		"EndRange": params.EndRange,
-		"RangeType": params.RangeType,
-		"StartPeriod": params.StartPeriod,
-		"StartRange": params.StartRange,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.EndPeriod != "" {
+		reqParams["EndPeriod"] = params.EndPeriod
+	}
+	if params.EndRange != "" {
+		reqParams["EndRange"] = params.EndRange
+	}
+	if params.RangeType != "" {
+		reqParams["RangeType"] = params.RangeType
+	}
+	if params.StartPeriod != "" {
+		reqParams["StartPeriod"] = params.StartPeriod
+	}
+	if params.StartRange != "" {
+		reqParams["StartRange"] = params.StartRange
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "boxscoreadvancedv3", reqParams)

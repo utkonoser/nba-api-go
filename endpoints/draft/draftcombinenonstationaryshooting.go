@@ -18,7 +18,11 @@ func (c *Client) GetDraftCombineNonStationaryShooting(ctx context.Context, param
 
 	reqParams := map[string]string{
 		"LeagueID": params.LeagueId,
-		"SeasonYear": params.SeasonYear,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.SeasonYear != "" {
+		reqParams["SeasonYear"] = params.SeasonYear
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "draftcombinenonstationaryshooting", reqParams)

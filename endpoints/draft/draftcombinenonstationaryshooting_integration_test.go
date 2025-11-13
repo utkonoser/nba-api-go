@@ -16,7 +16,8 @@ func TestGetDraftCombineNonStationaryShooting_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := DraftCombineNonStationaryShootingParams{
-		LeagueId: "00",
+		LeagueId:   "00",
+		SeasonYear: "2023-24", // Using a recent season
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

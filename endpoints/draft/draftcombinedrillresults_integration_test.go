@@ -16,7 +16,8 @@ func TestGetDraftCombineDrillResults_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := DraftCombineDrillResultsParams{
-		LeagueId: "00",
+		LeagueId:   "00",
+		SeasonYear: "2023-24", // Using a recent season
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

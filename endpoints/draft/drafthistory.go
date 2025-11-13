@@ -24,13 +24,29 @@ func (c *Client) GetDraftHistory(ctx context.Context, params DraftHistoryParams)
 
 	reqParams := map[string]string{
 		"LeagueID": params.LeagueId,
-		"College": params.CollegeNullable,
-		"OverallPick": params.OverallPickNullable,
-		"RoundNum": params.RoundNumNullable,
-		"RoundPick": params.RoundPickNullable,
-		"Season": params.SeasonYearNullable,
-		"TeamID": params.TeamIdNullable,
-		"TopX": params.TopxNullable,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.CollegeNullable != "" {
+		reqParams["College"] = params.CollegeNullable
+	}
+	if params.OverallPickNullable != "" {
+		reqParams["OverallPick"] = params.OverallPickNullable
+	}
+	if params.RoundNumNullable != "" {
+		reqParams["RoundNum"] = params.RoundNumNullable
+	}
+	if params.RoundPickNullable != "" {
+		reqParams["RoundPick"] = params.RoundPickNullable
+	}
+	if params.SeasonYearNullable != "" {
+		reqParams["Season"] = params.SeasonYearNullable
+	}
+	if params.TeamIdNullable != "" {
+		reqParams["TeamID"] = params.TeamIdNullable
+	}
+	if params.TopxNullable != "" {
+		reqParams["TopX"] = params.TopxNullable
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "drafthistory", reqParams)

@@ -18,7 +18,11 @@ func (c *Client) GetDraftCombineStats(ctx context.Context, params DraftCombineSt
 
 	reqParams := map[string]string{
 		"LeagueID": params.LeagueId,
-		"SeasonYear": params.SeasonAllTime,
+	}
+	
+	// Add optional parameters only if they are not empty
+	if params.SeasonAllTime != "" {
+		reqParams["SeasonYear"] = params.SeasonAllTime
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "draftcombinestats", reqParams)

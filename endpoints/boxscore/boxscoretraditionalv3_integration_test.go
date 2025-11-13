@@ -12,31 +12,37 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetBoxScoreDefensiveV2_Integration(t *testing.T) {
+func TestGetBoxScoreTraditionalV3_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
-	params := BoxScoreDefensiveV2Params{
+	params := BoxScoreTraditionalV3Params{
 		GameId: "0022300001",
+		// Using default values from Python library
+		EndPeriod:  "0",
+		EndRange:   "0",
+		RangeType:  "0",
+		StartPeriod: "0",
+		StartRange: "0",
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
-	response, err := client.GetBoxScoreDefensiveV2(ctx, params)
+	response, err := client.GetBoxScoreTraditionalV3(ctx, params)
 
 	if err != nil {
-		t.Logf("BoxScoreDefensiveV2 endpoint error: %v", err)
+		t.Logf("BoxScoreTraditionalV3 endpoint error: %v", err)
 		t.Skip("Endpoint may be unavailable or parameters incorrect")
 		return
 	}
 
 	require.NotNil(t, response)
-	// Resource may be empty for some endpoints
+	// V3 endpoints may have empty resource field
 	if response.Resource != "" {
-		assert.Contains(t, response.Resource, "boxscoredefensivev2")
+		assert.Contains(t, response.Resource, "boxscoretraditionalv3")
 	}
 
-	t.Logf("Successfully fetched boxscoredefensivev2 with %d result sets", len(response.ResultSets))
+	t.Logf("Successfully fetched boxscoretraditionalv3 with %d result sets", len(response.ResultSets))
 
 	// If no result sets, skip dataset validation (valid scenario)
 	if len(response.ResultSets) == 0 {
@@ -44,7 +50,7 @@ func TestGetBoxScoreDefensiveV2_Integration(t *testing.T) {
 		return
 	}
 
-// Verify PlayerStats dataset structure
+	// Verify PlayerStats dataset structure
 	if dataset, err := response.GetDataSet("PlayerStats"); err == nil {
 		assert.NotNil(t, dataset, "Should have PlayerStats dataset")
 		t.Logf("PlayerStats: %d rows", dataset.RowCount())
@@ -70,3 +76,4 @@ func TestGetBoxScoreDefensiveV2_Integration(t *testing.T) {
 		t.Logf("Dataset TeamStats not found (may be expected): %v", err)
 	}
 }
+

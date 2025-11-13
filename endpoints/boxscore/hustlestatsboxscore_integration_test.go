@@ -16,6 +16,7 @@ func TestGetHustleStatsBoxScore_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := HustleStatsBoxScoreParams{
+		GameId: "0022300001",
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

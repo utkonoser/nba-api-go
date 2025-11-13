@@ -16,7 +16,8 @@ func TestGetDraftCombineStats_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := DraftCombineStatsParams{
-		LeagueId: "00",
+		LeagueId:      "00",
+		SeasonAllTime: "All Time", // Using default value from Python library
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

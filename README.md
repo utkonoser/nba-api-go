@@ -20,149 +20,7 @@ A comprehensive Go client library for accessing NBA.com APIs. This library provi
 go get github.com/utkonoser/nba-api-go
 ```
 
-## Quick Start
-
-### Live Data
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"log"
-	"log/slog"
-	"os"
-
-	"github.com/utkonoser/nba-api-go/live"
-)
-
-func main() {
-	// Create logger
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-
-	// Create client
-	client := live.NewClient(logger)
-
-	// Get today's scoreboard
-	scoreboard, err := client.GetScoreboard(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Print games
-	for _, game := range scoreboard.Scoreboard.Games {
-		fmt.Printf("%s vs %s: %d-%d\n",
-			game.AwayTeam.TeamTricode,
-			game.HomeTeam.TeamTricode,
-			game.AwayTeam.Score,
-			game.HomeTeam.Score)
-	}
-}
-```
-
-### Box Score
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"log"
-
-	"github.com/utkonoser/nba-api-go/live"
-)
-
-func main() {
-	client := live.NewClient(nil) // nil uses default logger
-
-	// Get box score for a specific game
-	boxscore, err := client.GetBoxScore(context.Background(), "0022400001")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("Game: %s\n", boxscore.Game.GameStatusText)
-	fmt.Printf("Home: %s - %d\n", boxscore.Game.HomeTeam.TeamName, boxscore.Game.HomeTeam.Score)
-	fmt.Printf("Away: %s - %d\n", boxscore.Game.AwayTeam.TeamName, boxscore.Game.AwayTeam.Score)
-}
-```
-
-### Player Career Statistics
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"log"
-
-	"github.com/utkonoser/nba-api-go/stats"
-)
-
-func main() {
-	client := stats.NewClient(nil)
-
-	// Get Nikola Jokic's career stats (ID: 203999)
-	params := stats.PlayerCareerStatsParams{
-		PlayerID: "203999",
-		PerMode:  "PerGame",
-	}
-
-	response, err := client.GetPlayerCareerStats(context.Background(), params)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Get regular season stats
-	seasonStats, err := response.GetDataSet("SeasonTotalsRegularSeason")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Convert to map for easy access
-	stats := seasonStats.ToMap()
-	for _, season := range stats {
-		fmt.Printf("Season: %v, Points: %v\n", season["SEASON_ID"], season["PTS"])
-	}
-}
-```
-
-### Player Information
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"log"
-
-	"github.com/utkonoser/nba-api-go/stats"
-)
-
-func main() {
-	client := stats.NewClient(nil)
-
-	params := stats.CommonPlayerInfoParams{
-		PlayerID: "203999", // Nikola Jokic
-	}
-
-	response, err := client.GetCommonPlayerInfo(context.Background(), params)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	playerInfo, _ := response.GetDataSet("CommonPlayerInfo")
-	row, _ := playerInfo.GetRow(0)
-	
-	fmt.Printf("Player: %s %s\n", row["FIRST_NAME"], row["LAST_NAME"])
-	fmt.Printf("Team: %s\n", row["TEAM_NAME"])
-	fmt.Printf("Position: %s\n", row["POSITION"])
-}
-```
+## Examples
 
 ### Find Players
 
@@ -294,9 +152,9 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - LeagueSeasonMatchups, LeagueStandings, LeagueStandingsV3
 
 **Draft Endpoints:**
-- DraftBoard, DraftCombineDrillResults
-- DraftCombineNonStationaryShooting, DraftCombinePlayerAnthro
-- DraftCombineSpotShooting, DraftCombineStats, DraftHistory
+- DraftCombineDrillResults, DraftCombineNonStationaryShooting
+- DraftCombinePlayerAnthro, DraftCombineSpotShooting
+- DraftCombineStats, DraftHistory
 
 **Game Endpoints:**
 - GameRotation, HustleStatsBoxScore
@@ -318,10 +176,6 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - ScheduleLeagueV2, ScheduleLeagueV2Int
 - SynergyPlayTypes
 - VideoDetails, VideoDetailsAsset, VideoEvents, VideoEventsAsset, VideoStatus
-
-</details>
-
-For complete endpoint documentation and parameters, see the [Python nba_api documentation](https://github.com/swar/nba_api) which this library mirrors.
 
 
 ### Unit Tests ✅

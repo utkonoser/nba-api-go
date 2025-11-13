@@ -32,6 +32,7 @@ type Response struct {
 	raw        string
 	statusCode int
 	url        string
+	logger     *slog.Logger
 }
 
 // NewHTTPClient creates a new HTTP client with the specified base URL and headers.
@@ -95,7 +96,12 @@ func (c *HTTPClient) SendRequest(ctx context.Context, endpoint string, params ma
 			slog.String("error", err.Error()))
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			c.logger.WarnContext(ctx, "Failed to close response body",
+				slog.String("error", closeErr.Error()))
+		}
+	}()
 
 	// Read response body (handle gzip encoding)
 	var reader io.Reader = resp.Body
@@ -106,7 +112,12 @@ func (c *HTTPClient) SendRequest(ctx context.Context, endpoint string, params ma
 				slog.String("error", err.Error()))
 			return nil, fmt.Errorf("failed to create gzip reader: %w", err)
 		}
-		defer gzipReader.Close()
+		defer func() {
+			if closeErr := gzipReader.Close(); closeErr != nil {
+				c.logger.WarnContext(ctx, "Failed to close gzip reader",
+					slog.String("error", closeErr.Error()))
+			}
+		}()
 		reader = gzipReader
 	}
 
@@ -121,6 +132,7 @@ func (c *HTTPClient) SendRequest(ctx context.Context, endpoint string, params ma
 		raw:        string(body),
 		statusCode: resp.StatusCode,
 		url:        fullURL,
+		logger:     c.logger,
 	}
 
 	c.logger.DebugContext(ctx, "Received NBA API response",
@@ -194,6 +206,25 @@ func (r *Response) GetJSON(v interface{}) error {
 // IsValidJSON checks if the response is valid JSON.
 func (r *Response) IsValidJSON() bool {
 	var js interface{}
-	return json.Unmarshal([]byte(r.raw), &js) == nil
+	err := json.Unmarshal([]byte(r.raw), &js)
+	if err != nil {
+		// Log raw response for debugging
+		rawBytes := []byte(r.raw)
+		previewLen := 500
+		if len(rawBytes) < previewLen {
+			previewLen = len(rawBytes)
+		}
+		logger := r.logger
+		if logger == nil {
+			logger = slog.Default()
+		}
+		logger.Error("Invalid JSON response",
+			"status_code", r.statusCode,
+			"url", r.url,
+			"body_length", len(rawBytes),
+			"body_preview", string(rawBytes[:previewLen]),
+			"error", err.Error())
+		return false
+	}
+	return true
 }
-
