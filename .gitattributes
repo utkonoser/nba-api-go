@@ -1,0 +1,19 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Go source files
+*.go text diff=golang
+
+# Documentation
+*.md text
+*.txt text
+
+# Scripts
+*.sh text
+*.py text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
