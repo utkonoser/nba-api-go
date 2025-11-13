@@ -16,11 +16,13 @@ func TestGetPlayerVsPlayer_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := PlayerVsPlayerParams{
+		PlayerId: "2544", // LeBron James
+		VsPlayerId: "201939", // Stephen Curry
 		Season: "2023-24",
-		LeagueIdNullable: "",
+		LeagueIdNullable: "00",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetPlayerVsPlayer(ctx, params)

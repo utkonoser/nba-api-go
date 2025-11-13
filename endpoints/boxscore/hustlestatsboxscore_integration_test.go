@@ -19,7 +19,7 @@ func TestGetHustleStatsBoxScore_Integration(t *testing.T) {
 		GameId: "0022300001",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetHustleStatsBoxScore(ctx, params)

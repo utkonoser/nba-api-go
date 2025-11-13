@@ -20,7 +20,7 @@ func TestGetHomePageV2_Integration(t *testing.T) {
 		Season: "2023-24",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetHomePageV2(ctx, params)

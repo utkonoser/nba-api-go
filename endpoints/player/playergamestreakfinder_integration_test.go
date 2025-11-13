@@ -21,7 +21,7 @@ func TestGetPlayerGameStreakFinder_Integration(t *testing.T) {
 		SeasonTypeNullable: "Regular Season",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetPlayerGameStreakFinder(ctx, params)

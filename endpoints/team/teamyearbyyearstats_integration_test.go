@@ -16,11 +16,12 @@ func TestGetTeamYearByYearStats_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := TeamYearByYearStatsParams{
+		TeamId: "1610612737", // Atlanta Hawks
 		LeagueId: "00",
 		SeasonTypeAllStar: "Regular Season",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetTeamYearByYearStats(ctx, params)

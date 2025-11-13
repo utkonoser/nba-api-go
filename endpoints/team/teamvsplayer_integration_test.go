@@ -16,11 +16,13 @@ func TestGetTeamVsPlayer_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := TeamVsPlayerParams{
+		TeamId: "1610612737", // Atlanta Hawks
+		VsPlayerId: "2544", // LeBron James
 		Season: "2023-24",
-		LeagueIdNullable: "",
+		LeagueIdNullable: "00",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetTeamVsPlayer(ctx, params)

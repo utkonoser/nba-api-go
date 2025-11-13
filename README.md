@@ -8,10 +8,10 @@ A comprehensive Go client library for accessing NBA.com APIs. This library provi
 ## Features
 
 - 🏀 **Live Data API**: Real-time game scores, box scores, play-by-play, and odds
-- 📊 **Stats API**: 128 comprehensive endpoints covering all NBA data
+- 📊 **Stats API**: 125 comprehensive endpoints covering all NBA data
 - 🔍 **Type-Safe**: Fully typed responses with Go structs
 - 🎯 **Easy Search**: Find players and teams through API endpoints
-- ✅ **Well-Tested**: 128 unit tests + integration tests (in progress) for all endpoints
+- ✅ **Well-Tested**: 174 tests (91 unit + 83 integration) - all passing
 - 🎯 **Google Style Guide**: Follows Go best practices and Google's style guide
 
 ## Installation
@@ -80,7 +80,7 @@ The `live` package provides access to real-time NBA data:
 
 ### Stats Package
 
-The `endpoints` package provides access to NBA statistics with **128 endpoints** organized into 13 logical packages:
+The `endpoints` package provides access to NBA statistics with **125 endpoints** organized into 13 logical packages:
 
 #### Popular Endpoints:
 - **`GetPlayerCareerStats(ctx, params)`** - Player career statistics
@@ -94,7 +94,7 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - **`GetTeamDashLineups(ctx, params)`** - Team lineup statistics
 - **`GetPlayerGameLog(ctx, params)`** - Player game log
 
-#### All Available Endpoints (128 total):
+#### All Available Endpoints (125 total):
 
 <details>
 <summary>Click to expand full endpoint list</summary>
@@ -123,14 +123,14 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - PlayerDashPtPass, PlayerDashPtReb, PlayerDashPtShotDefend, PlayerDashPtShots
 - PlayerEstimatedMetrics, PlayerFantasyProfile, PlayerFantasyProfileBarGraph
 - PlayerGameLog, PlayerGameLogs, PlayerGameStreakFinder
-- PlayerIndex, PlayerNextNGames, PlayerProfileV2, PlayerVsPlayer
+- PlayerIndex, PlayerProfileV2, PlayerVsPlayer
 
 **Team Endpoints:**
 - CommonTeamRoster, CommonTeamYears
 - CumeStatsTeam, CumeStatsTeamGames
 - TeamDashboardByGeneralSplits, TeamDashboardByShootingSplits
-- TeamDashLineups, TeamDashPtPass, TeamDashPtReb, TeamDashPtShots
-- TeamDetails, TeamEstimatedMetrics, TeamGameStreakFinder
+- TeamDashLineups, TeamDashPtPass, TeamDashPtReb
+- TeamDetails, TeamEstimatedMetrics
 - TeamHistoricalLeaders, TeamInfoCommon
 - TeamPlayerDashboard, TeamPlayerOnOffDetails, TeamPlayerOnOffSummary
 - TeamVsPlayer, TeamYearByYearStats
@@ -168,10 +168,10 @@ The `endpoints` package provides access to NBA statistics with **128 endpoints**
 - MatchupsRollup, PlayoffPicture
 - ScheduleLeagueV2, ScheduleLeagueV2Int
 - SynergyPlayTypes
-
+</details>
 
 ### Unit Tests ✅
-Fast, reliable tests using mock HTTP servers - **all 128 tests passing**:
+Fast, reliable tests using mock HTTP servers - **all 91 unit tests passing**:
 
 ```bash
 # Run all unit tests
@@ -199,10 +199,11 @@ go test -v -tags=integration -run TestGetPlayerCareerStats ./endpoints/player
 ```
 
 **Test Statistics**:
-- ✅ **128/128 unit tests** passing (100%)
-- ✅ **42/110 integration tests** passing (100% of configured)
-- ⏭️ **68/110 integration tests** skipped (in  progress)
-- ❌ **0/110 integration tests** failing
+- ✅ **91/91 unit tests** passing (100%)
+- ✅ **83/83 integration tests** passing (100%)
+- ⏭️ **0 integration tests** skipped
+- ❌ **0 integration tests** failing
+- 🎯 **Total: 174/174 tests** passing (100% success rate)
 
 ## Contributing
 

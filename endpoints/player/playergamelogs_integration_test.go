@@ -22,7 +22,7 @@ func TestGetPlayerGameLogs_Integration(t *testing.T) {
 		LeagueIdNullable: "00",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetPlayerGameLogs(ctx, params)

@@ -20,7 +20,7 @@ func TestGetDraftCombineDrillResults_Integration(t *testing.T) {
 		SeasonYear: "2023-24", // Using a recent season
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetDraftCombineDrillResults(ctx, params)

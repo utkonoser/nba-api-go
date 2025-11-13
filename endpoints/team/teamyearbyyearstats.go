@@ -18,11 +18,25 @@ type TeamYearByYearStatsParams struct {
 func (c *Client) GetTeamYearByYearStats(ctx context.Context, params TeamYearByYearStatsParams) (*StatsResponse, error) {
 	c.logger.InfoContext(ctx, "Fetching teamyearbyyearstats")
 
+	// Set defaults for required parameters
+	leagueId := params.LeagueId
+	if leagueId == "" {
+		leagueId = "00"
+	}
+	perMode := params.PerModeSimple
+	if perMode == "" {
+		perMode = "Totals"
+	}
+	seasonType := params.SeasonTypeAllStar
+	if seasonType == "" {
+		seasonType = "Regular Season"
+	}
+
 	reqParams := map[string]string{
 		"TeamID": params.TeamId,
-		"LeagueID": params.LeagueId,
-		"PerMode": params.PerModeSimple,
-		"SeasonType": params.SeasonTypeAllStar,
+		"LeagueID": leagueId,
+		"PerMode": perMode,
+		"SeasonType": seasonType,
 	}
 
 	resp, err := c.httpClient.SendRequest(ctx, "teamyearbyyearstats", reqParams)

@@ -16,12 +16,13 @@ func TestGetTeamPlayerOnOffDetails_Integration(t *testing.T) {
 	client := NewClient(nil)
 	
 	params := TeamPlayerOnOffDetailsParams{
+		TeamId: "1610612737", // Atlanta Hawks
 		Season: "2023-24",
 		SeasonTypeAllStar: "Regular Season",
-		LeagueIdNullable: "",
+		LeagueIdNullable: "00",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetTeamPlayerOnOffDetails(ctx, params)

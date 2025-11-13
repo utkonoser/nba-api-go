@@ -30,17 +30,19 @@ test-verbose:
 	go test -v ./...
 
 # Run integration tests (real API calls)
+# Using -p 1 to run tests sequentially to avoid NBA API rate limiting
+# Using -timeout 10m to allow enough time for all tests to complete
 test-integration:
-	@echo "Running integration tests (real API calls)..."
-	go test -v -tags=integration ./...
+	@echo "Running integration tests (real API calls, sequential execution)..."
+	go test -v -tags=integration -p 1 -timeout 10m ./...
 
 # Run all tests (unit + integration)
 test-all:
 	@echo "Running unit tests..."
 	go test ./...
 	@echo ""
-	@echo "Running integration tests..."
-	go test -v -tags=integration ./...
+	@echo "Running integration tests (sequential execution)..."
+	go test -v -tags=integration -p 1 -timeout 10m ./...
 
 # Format code
 fmt:

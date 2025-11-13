@@ -19,7 +19,7 @@ func TestGetPlayerAwards_Integration(t *testing.T) {
 		PlayerId: "2544", // LeBron James
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetPlayerAwards(ctx, params)

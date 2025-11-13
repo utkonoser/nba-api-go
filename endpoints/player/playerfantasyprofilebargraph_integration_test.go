@@ -21,7 +21,7 @@ func TestGetPlayerFantasyProfileBarGraph_Integration(t *testing.T) {
 		LeagueIdNullable: "00",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	response, err := client.GetPlayerFantasyProfileBarGraph(ctx, params)
