@@ -28,7 +28,7 @@ jobs:
           golangci-lint --version
 
       - name: Run linter
-        run: golangci-lint run --out-format=colored-line-number
+        run: golangci-lint run
 
   unit-tests:
     name: Unit Tests
